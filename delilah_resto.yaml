@@ -1,0 +1,478 @@
+---
+openapi: 3.0.0
+info:
+  title: Swagger Petstore
+  description: |
+    This is a sample Petstore server.  You can find
+    out more about Swagger at
+    [http://swagger.io](http://swagger.io) or on
+    [irc.freenode.net, #swagger](http://swagger.io/irc/).
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+- url: https://virtserver.swaggerhub.com/emilianodel/Example/1.0.0
+  description: SwaggerHub API Auto Mocking
+- url: https://petstore.swagger.io/v2
+tags:
+- name: Users
+  description: Informacion de los usarios
+- name: Products
+  description: Informacion de los productos
+- name: Orders
+  description: Informacion de los pedidos
+paths:
+  /users:
+    get:
+      tags:
+      - admin
+      summary: Lista de todos los usuarios
+      responses:
+        "200":
+          description: Lista de usuarios
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        "401":
+          description: Usuario no autorizado
+      security:
+      - bearerAuth: []
+    post:
+      tags:
+      - users
+      - admin
+      summary: Creates a new user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/users_body'
+        required: true
+      responses:
+        "201":
+          description: Usuario creado exitosamente
+        "400":
+          description: Datos incompletos, es necesario completar todos los campos
+  /users/{id}:
+    get:
+      tags:
+      - users
+      - admin
+      summary: Obtiene un usuario por su ID
+      parameters:
+      - name: id
+        in: path
+        description: User ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Operacion completa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "404":
+          description: Usuario no existe
+        "401":
+          description: Usuario no autorizado
+      security:
+      - bearerAuth: []
+  /users/login:
+    post:
+      tags:
+      - users
+      - admin
+      summary: Login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/users_login_body'
+      responses:
+        "200":
+          description: Login exitoso
+        "401":
+          description: Usuario o contraseña incorrecta
+  /products:
+    get:
+      tags:
+      - users
+      - admin
+      summary: Lista de todos los productos
+      responses:
+        "200":
+          description: Lista de productos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Products'
+      security:
+      - bearerAuth: []
+    post:
+      tags:
+      - admin
+      summary: Creacion de un nuevo producto
+      requestBody:
+        description: Producto creado exitosamente
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Products'
+        required: true
+      responses:
+        "201":
+          description: Producto creado exitosamente
+        "400":
+          description: Datos incompletos, es necesario completar todos los campos
+        "401":
+          description: Usuario no autorizado
+      security:
+      - bearerAuth: []
+  /products/{products_id}:
+    get:
+      tags:
+      - users
+      - admin
+      summary: Obtener un producto por su ID
+      parameters:
+      - name: products_id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: number
+      responses:
+        "200":
+          description: Informacion del producto
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Products'
+        "404":
+          description: Producto no existe
+    put:
+      tags:
+      - admin
+      summary: Actualiza informacion del producto
+      parameters:
+      - name: products_id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: number
+      requestBody:
+        description: Producto actualizado
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/products_products_id_body'
+        required: true
+      responses:
+        "200":
+          description: Producto actualizado exitosamente
+        "400":
+          description: Datos incompletos, es necesario completar todos los campos
+        "401":
+          description: Usuario no autorizado
+        "404":
+          description: El producto no existe
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - users
+      - admin
+      summary: Eliminar un producto
+      parameters:
+      - name: products_id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: number
+      responses:
+        "200":
+          description: Producto eliminado exitosamente
+        "401":
+          description: Usuario no autorizado
+        "404":
+          description: El producto no existe
+  /orders:
+    post:
+      tags:
+      - users
+      summary: Orden nueva
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/orders_body'
+        required: true
+      responses:
+        "201":
+          description: Oden creada exitosamente
+        "401":
+          description: Usuario no autorizado
+      security:
+      - bearerAuth: []
+  /orders/{id}:
+    get:
+      tags:
+      - admin
+      summary: Trae la informacion de una orden
+      parameters:
+      - name: id
+        in: path
+        description: Orden ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Informacion de la orden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        "401":
+          description: Usuario no autorizado
+        "404":
+          description: Este ID no corresponde a ninguna orden
+      security:
+      - bearerAuth: []
+    put:
+      tags:
+      - admin
+      summary: Trae la informacion de una orden
+      parameters:
+      - name: id
+        in: path
+        description: Orden ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/orders_id_body'
+      responses:
+        "201":
+          description: El estatus del producto ha sido actualizado exitosamente
+        "401":
+          description: Usuario no autorizado
+        "404":
+          description: Este ID no corresponde a ninguna orden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - admin
+      summary: Trae la informacion de una orden
+      parameters:
+      - name: id
+        in: path
+        description: Orden ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Orden eliminada exitosamente
+        "401":
+          description: Usuario no autorizado
+        "404":
+          description: Este ID no corresponde a ninguna orden
+      security:
+      - bearerAuth: []
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        users_id:
+          type: integer
+          example: 1
+        username:
+          type: string
+          example: pepitoromero
+        fullName:
+          type: string
+          example: Pepito Romero
+        email:
+          type: string
+          example: pepito_romero@hotmail.com
+        phone:
+          type: number
+          example: 205984620
+        address:
+          type: string
+          example: 7220 North Tampa Ave
+        pass:
+          type: string
+          example: pepito123456
+        isAdmin:
+          type: boolean
+          example: true
+    Products:
+      type: object
+      properties:
+        products_id:
+          type: integer
+          example: 1
+        product_name:
+          type: string
+          example: Taco
+        price:
+          type: number
+          example: 50
+    Order:
+      type: object
+      properties:
+        status_name:
+          type: string
+          example: nuevo
+        time:
+          type: string
+          example: 2021-07-16 11:12:54
+        order_id:
+          type: number
+          example: 1
+        product_name:
+          type: string
+          example: Hamburguesa
+        total:
+          type: integer
+          example: 150
+        payment_type:
+          type: string
+          example: Debito
+        full_name:
+          type: string
+          description: Nombre completo
+          example: Pepito Romero Gonzalez
+        email:
+          type: string
+          example: pepitoromer@hotmail.com
+        address:
+          type: string
+          example: 1230 Tampa Ave
+        phone_numer:
+          type: string
+          example: "7028259865"
+    users_body:
+      required:
+      - address
+      - email
+      - fullname
+      - pasword
+      - phone
+      - username
+      type: object
+      properties:
+        username:
+          type: string
+          example: pepito12345
+        fullname:
+          type: string
+          example: Pepito Romero
+        email:
+          type: string
+          example: pepito_romero12345@gmail.com
+        phone:
+          type: integer
+          example: 1052059584
+        address:
+          type: string
+          example: 6968 Circle Dr
+        pasword:
+          type: string
+          example: PepitoRomero12345
+    users_login_body:
+      properties:
+        email:
+          type: string
+          example: pepito@gmail.com
+        password:
+          type: string
+          example: pepito_4785
+    products_products_id_body:
+      properties:
+        name:
+          type: string
+          example: Tacos
+        price:
+          type: number
+          example: 50
+    orders_body:
+      properties:
+        products_id:
+          type: number
+        payment_id:
+          type: number
+        quantity:
+          type: number
+    orders_id_body:
+      properties:
+        status_id:
+          type: number
+  requestBodies:
+    UserArray:
+      description: List of user object
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/User'
+      required: true
+    Products:
+      description: List of user object
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Products'
+      required: true
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
