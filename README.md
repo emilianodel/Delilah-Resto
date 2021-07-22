@@ -3,7 +3,7 @@
 Delilah Resto
 
 Para este proyecto he creado una api en el cual realizas operaciones CRUD. El archivo "delilah_resto.sql" contiene todo lo necesario para crear la base de datos. 
-Asimismo, el archivo .yaml contiene toda la documentacion necesaria de la API REST.
+Asimismo, el archivo .yaml contiene toda la documentacion necesaria de la API REST. El archivo correra en el puerto 3306.
 
 Es necesario instalar las siguientes dependencias:
 
