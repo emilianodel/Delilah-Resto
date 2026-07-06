@@ -2,22 +2,21 @@
 
 Delilah Resto
 
-Para este proyecto he creado una api en el cual realizas operaciones CRUD para un restaurante, dependiendo si el usuario es administrador o no. 
+For this project, I created an API that performs CRUD operations for a restaurant, with functionality varying based on whether the user is an administrator.
 
-El archivo "delilah_resto.yaml" contiene toda la documentacion necesaria de la API REST.
+The "delilah_resto.yaml" file contains the complete REST API documentation.
 
-El archivo "delilah_resto.sql" contiene toda la estructura de la base de datos del proyecto, contiene la informacion precargada para el uso de la API.
+The "delilah_resto.sql" file contains the project's database structure and includes pre-loaded data for using the API.
 
-Asimismo,  el archivo "index.js" correra en el puerto 3306. Es necesario instalar las siguientes dependencias para un correcto funcionamiento de la API, las cuales se encuentran en el archivo package.json:
+Additionally, the "index.js" file runs on port 3306. To ensure the API functions correctly, the following dependencies—listed in the package.json file—must be installed:
 
 1. express
 2. jsonwebtoken
 3. mysql2
 4. nodemon
-4. sequilize
-
-
-Espero les guste! 
+5. sequelize
+6. 
+I hope you like it!
 
 
 
